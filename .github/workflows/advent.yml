@@ -1,0 +1,22 @@
+name: Advent of Code
+on:
+  schedule:
+  - cron: 0 5 * * *
+    
+  workflow_dispatch:
+
+jobs:
+  create_daily_issue:
+    name: Create Daily Issue
+    runs-on: ubuntu-latest
+    steps:
+      
+    - name: issue-bot
+      uses: imjohnbo/issue-bot@v2
+      with:
+        title: "Advent of Code - Day $(date +'%d')"
+        assignees: "jwbb1508" # GitHub handles without the @
+        labels: "enhancement"
+        pinned: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
