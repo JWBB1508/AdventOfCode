@@ -29,4 +29,4 @@ jobs:
         uses: peter-evans/create-or-update-comment@v1
         with:
           issue-number: ${{ steps.create.outputs.issue-number }}
-          body: https://adventofcode.com/2020/day/${{ steps.date.output.date }}
+          body: https://adventofcode.com/2020/day/${{ steps.date.outputs.date }}
