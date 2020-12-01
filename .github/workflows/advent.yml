@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%Oe')"
+        run: echo "::set-output name=date::$(date +'%Oe'| sed 's/ //')"
 
       - name: Create Daily Issue
         id: create
