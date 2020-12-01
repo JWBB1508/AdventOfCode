@@ -12,14 +12,21 @@ jobs:
     steps:
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%d')" >> $GITHUB_ENV
+        run: echo "::set-output name=date::$(date +'%d')"
 
       - name: Create Daily Issue
+        id: create
         uses: imjohnbo/issue-bot@v2
         with:
-          title: Advent of Code - Day $(date +'%d')
+          title: Advent of Code - Day ${{ steps.date.outputs.date }}
           assignees: "jwbb1508" # GitHub handles without the @
           labels: "enhancement"
           pinned: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Add URL to issue
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ steps.create.outputs.issue-number }}
+          body: https://adventofcode.com/2020/day/${{ steps.date.output.date }}
