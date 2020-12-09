@@ -3,7 +3,6 @@ https://adventofcode.com/2020/day/8
 """
 
 import sys
-import copy
 
 
 def get_code_steps(filename):
