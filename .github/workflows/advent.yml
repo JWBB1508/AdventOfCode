@@ -18,7 +18,7 @@ jobs:
         id: create
         uses: imjohnbo/issue-bot@v2
         with:
-          title: Advent of Code - Day ${{ steps.date.outputs.date }}
+          title: Advent of Code 2021 - Day ${{ steps.date.outputs.date }}
           assignees: "jwbb1508" # GitHub handles without the @
           labels: "enhancement"
           pinned: true
