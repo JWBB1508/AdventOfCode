@@ -13,7 +13,7 @@ fn get_data(filename: impl AsRef<Path>) -> Vec<i32> {
         .collect()
 }
 
-fn main() {
+fn part_one() {
     let data = get_data("../../data/01.txt");
     let mut count = 0;
     for i in 0..data.len() {
@@ -26,4 +26,27 @@ fn main() {
     }
 
     println!("{}", count)
+}
+
+fn part_two() {
+    let data = get_data("../../data/01.txt");
+    let mut count = 0;
+    for i in 0..data.len() {
+        if i == data.len() - 3 {
+            break;
+        }
+        // Cancelled out data[i+1] and data[i+2] from either side
+        if data[i+3] > data[i] {
+            count += 1;
+        }
+    }
+
+    println!("{}", count)
+}
+
+fn main() {
+    println!("Part One");
+    part_one();
+    println!("Part Two");
+    part_two();
 }
