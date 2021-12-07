@@ -39,6 +39,25 @@ fn part_one() {
 }
 
 fn part_two() {
+    let mut horizontal_pos = 0;
+    let mut depth = 0;
+    let mut aim = 0;
+    for line in get_data("../../data/02.txt") {
+        if line.0 == "forward" {
+            horizontal_pos += line.1;
+            depth += line.1 * aim;
+        }
+        else if line.0 == "down" { 
+            aim += line.1;
+        }
+        else if line.0 == "up" {
+            aim -= line.1;
+        }
+    }
+
+    println!("Horizontal Position: {}", horizontal_pos);
+    println!("Depth: {}", depth);
+    println!("Product: {}", horizontal_pos * depth)
 }
 
 fn main() {
