@@ -131,6 +131,7 @@ dmypy.json
 # VSCode
 .vscode/
 
-# Rust
+# Rust: executable crate
+/target/
 *.exe
 *.pdb
