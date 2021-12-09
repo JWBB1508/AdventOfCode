@@ -67,7 +67,7 @@ fn part_one() {
     let bingo_calls = get_bingo_calls(format!("data/{}", filename));
     let boards = get_boards(format!("data/{}", filename));
 
-    let (winning_board_num, called_numbers) = run_bingo(&boards, bingo_calls);
+    let (winning_board_num, called_numbers) = run_bingo(&boards, &bingo_calls);
     let winning_board_num: usize = winning_board_num.expect("No winner!");
 
     println!(
@@ -94,9 +94,50 @@ fn part_one() {
     );
 }
 
-fn part_two() {}
+fn part_two() {
+    let filename = "input.txt";
+    let bingo_calls = get_bingo_calls(format!("data/{}", filename));
+    let mut boards = get_boards(format!("data/{}", filename));
 
-fn run_bingo(boards: &Vec<Vec<Vec<u32>>>, bingo_calls: Vec<u32>) -> (Option<usize>, Vec<u32>) {
+    let mut winning_board_num;
+    let mut called_numbers;
+    loop {
+        let (_winning_board_num, _called_numbers) = run_bingo(&boards, &bingo_calls);
+        winning_board_num = _winning_board_num.expect("No winner!");
+        called_numbers = _called_numbers;
+
+        if boards.len() == 1 {
+            break;
+        }
+
+        boards.remove(winning_board_num);
+    }
+
+    println!(
+        "Board {} wins after {} calls",
+        winning_board_num + 1,
+        called_numbers.len()
+    );
+    println!("Called numbers: {:?}", called_numbers);
+
+    let mut unmarked_sum = 0;
+    for row in &boards[winning_board_num] {
+        for num in row {
+            if !called_numbers.contains(num) {
+                unmarked_sum += num;
+            }
+        }
+    }
+
+    println!("Unmarked sum: {}", unmarked_sum);
+
+    println!(
+        "Final score: {}",
+        unmarked_sum * called_numbers[called_numbers.len() - 1]
+    );
+}
+
+fn run_bingo(boards: &Vec<Vec<Vec<u32>>>, bingo_calls: &Vec<u32>) -> (Option<usize>, Vec<u32>) {
     let mut results = Vec::new();
     for board in boards {
         let mut blank_board = Vec::<Vec<bool>>::new();
@@ -109,7 +150,7 @@ fn run_bingo(boards: &Vec<Vec<Vec<u32>>>, bingo_calls: Vec<u32>) -> (Option<usiz
 
     let mut called_numbers = Vec::new();
     let mut winning_board_num = None;
-    for bingo_call in &bingo_calls {
+    for bingo_call in bingo_calls {
         called_numbers.push(*bingo_call);
         for (i, board) in boards.iter().enumerate() {
             for (j, row) in board.iter().enumerate() {
