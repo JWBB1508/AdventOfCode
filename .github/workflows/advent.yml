@@ -18,7 +18,7 @@ jobs:
         id: create
         uses: imjohnbo/issue-bot@v2
         with:
-          title: Advent of Code 2021 - Day ${{ steps.date.outputs.date }}
+          title: Advent of Code 2022 - Day ${{ steps.date.outputs.date }}
           assignees: "jwbb1508" # GitHub handles without the @
           labels: "enhancement"
           pinned: true
@@ -29,4 +29,4 @@ jobs:
         uses: peter-evans/create-or-update-comment@v1
         with:
           issue-number: ${{ steps.create.outputs.issue-number }}
-          body: https://adventofcode.com/2021/day/${{ steps.date.outputs.date }}
+          body: https://adventofcode.com/2022/day/${{ steps.date.outputs.date }}
