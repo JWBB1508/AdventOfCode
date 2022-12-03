@@ -3,6 +3,7 @@ https://adventofcode.com/2022/day/2
 """
 
 import sys
+from itertools import groupby
 
 BASE_SCORES = {"X": 1, "Y": 2, "Z": 3}
 
