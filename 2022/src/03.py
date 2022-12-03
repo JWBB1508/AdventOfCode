@@ -1,95 +1,53 @@
 """
-https://adventofcode.com/2022/day/2
+https://adventofcode.com/2022/day/3
 """
 
 import sys
-from itertools import groupby
-
-BASE_SCORES = {"X": 1, "Y": 2, "Z": 3}
-
-LOSS_VALUE = 0
-DRAW_VALUE = 3
-WIN_VALUE = 6
 
 
 def get_data(filename):
+    backpacks = []
     with open(f"{sys.path[0]}/../data/{filename}") as file:
-        moves = [line.strip().split() for line in file.readlines()]
-    return moves
+        for raw_line in file.readlines():
+            line = raw_line.strip()
+            backpacks.append([line[: len(line) // 2], line[len(line) // 2 :]])
+    return backpacks
 
 
-def get_score(their_move, my_move):
-    if their_move not in ["A", "B", "C"]:
-        raise Exception(f"Unrecognised opponent move: {their_move}")
-    if my_move not in ["X", "Y", "Z"]:
-        raise Exception(f"Unrecognised move: {my_move}")
-    score = BASE_SCORES[my_move]
-    if my_move == "X":
-        if their_move == "A":
-            score += DRAW_VALUE
-        if their_move == "B":
-            score += LOSS_VALUE
-        if their_move == "C":
-            score += WIN_VALUE
-    elif my_move == "Y":
-        if their_move == "A":
-            score += WIN_VALUE
-        if their_move == "B":
-            score += DRAW_VALUE
-        if their_move == "C":
-            score += LOSS_VALUE
-    elif my_move == "Z":
-        if their_move == "A":
-            score += LOSS_VALUE
-        if their_move == "B":
-            score += WIN_VALUE
-        if their_move == "C":
-            score += DRAW_VALUE
-    return score
+def get_common_item(compartment_one, compartment_two):
+    return set(compartment_one).intersection(set(compartment_two)).pop()
 
 
-def get_move(their_move, outcome):
-    if their_move not in ["A", "B", "C"]:
-        raise Exception(f"Unrecognised opponent move: {their_move}")
-    if outcome not in ["X", "Y", "Z"]:
-        raise Exception(f"Unrecognised outcome: {outcome}")
-    if outcome == "X":
-        if their_move == "A":
-            return "Z"
-        if their_move == "B":
-            return "X"
-        if their_move == "C":
-            return "Y"
-    elif outcome == "Y":
-        if their_move == "A":
-            return "X"
-        if their_move == "B":
-            return "Y"
-        if their_move == "C":
-            return "Z"
-    elif outcome == "Z":
-        if their_move == "A":
-            return "Y"
-        if their_move == "B":
-            return "Z"
-        if their_move == "C":
-            return "X"
+def get_badge(backpack_one, backpack_two, backpack_three):
+    return (
+        set(backpack_one)
+        .intersection(set(backpack_two))
+        .intersection(set(backpack_three))
+        .pop()
+    )
+
+
+def get_priority(item):
+    if item.islower():
+        return ord(item) - 96
+    else:
+        return ord(item) - 38
 
 
 def part_one():
-    moves = get_data("02.txt")
-    total_score = 0
-    for move in moves:
-        total_score += get_score(move[0], move[1])
-    return total_score
+    backpacks = get_data("03.txt")
+    common_items = []
+    for backpack in backpacks:
+        common_items.append(get_common_item(backpack[0], backpack[1]))
+    return sum([get_priority(item) for item in common_items])
 
 
 def part_two():
-    moves = get_data("02.txt")
-    total_score = 0
-    for move in moves:
-        total_score += get_score(move[0], get_move(move[0], move[1]))
-    return total_score
+    backpacks = [backpack[0] + backpack[1] for backpack in get_data("03.txt")]
+    badges = []
+    for i in range(0, len(backpacks) - 2, 3):
+        badges.append(get_badge(backpacks[i], backpacks[i + 1], backpacks[i + 2]))
+    return sum([get_priority(badge) for badge in badges])
 
 
 if __name__ == "__main__":
