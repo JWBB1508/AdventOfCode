@@ -24,6 +24,20 @@ def part_one():
     for pair in pairs:
         if (
             get_min(pair[0]) >= get_min(pair[1])
+            and get_max(pair[0]) <= get_max(pair[1])
+            or get_min(pair[1]) >= get_min(pair[0])
+            and get_max(pair[1]) <= get_max(pair[0])
+        ):
+            enclaved_pairs += 1
+    return enclaved_pairs
+
+
+def part_two():
+    pairs = get_data("04.txt")
+    enclaved_pairs = 0
+    for pair in pairs:
+        if (
+            get_min(pair[0]) >= get_min(pair[1])
             and get_min(pair[0]) <= get_max(pair[1])
             or get_min(pair[1]) >= get_min(pair[0])
             and get_min(pair[1]) <= get_max(pair[0])
@@ -38,3 +52,4 @@ def part_one():
 
 if __name__ == "__main__":
     print(part_one())
+    print(part_two())
