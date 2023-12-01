@@ -20,7 +20,7 @@ namespace AdventOfCode._2023._01
             };
         }
 
-        public decimal GetCalibrationValue(bool debug = false)
+        public decimal GetCalibrationValue()
         {
             return File.ReadLines(_dataFilename)
                 .Select(x => GetDigits(x))
