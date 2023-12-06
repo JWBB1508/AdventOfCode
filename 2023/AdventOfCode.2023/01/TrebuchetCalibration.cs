@@ -3,15 +3,13 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode._2023._01
 {
-    internal class TrebuchetCalibration
+    internal class TrebuchetCalibration : APuzzle
     {
-        private readonly string _dataFilename;
         private readonly Regex _digitRegex;
 
         public TrebuchetCalibration(string dataFilename, Part part)
+            : base(dataFilename, part)
         {
-            _dataFilename = dataFilename;
-
             _digitRegex = part switch
             {
                 Part.One => new(@"\d"),
@@ -20,9 +18,14 @@ namespace AdventOfCode._2023._01
             };
         }
 
-        public decimal GetCalibrationValue()
+        public override string GetAnswer()
         {
-            return File.ReadLines(_dataFilename)
+            return GetCalibrationValue().ToString();
+        }
+
+        private decimal GetCalibrationValue()
+        {
+            return File.ReadLines(DataFilename)
                 .Select(x => GetDigits(x))
                 .Select(x => decimal.Parse($"{x.First}{x.Last}"))
                 .Sum();
