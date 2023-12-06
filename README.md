@@ -13,3 +13,5 @@ https://adventofcode.com/
 2021 Leaderboard: https://adventofcode.com/2021/leaderboard/private/view/376921
 
 2022 Leaderboard: https://adventofcode.com/2022/leaderboard/private/view/376921
+
+2023 Leaderboard: https://adventofcode.com/2023/leaderboard/private/view/376921
