@@ -11,27 +11,20 @@ namespace AdventOfCode._2023._03
         {
             IEnumerable<PartLabel> partLabels = Schematic.FromData(File.ReadAllLines(DataFilename)).GetPartLabels();
 
-            switch (Part)
+            return Part switch
             {
-                case Part.One:
-                    return partLabels
-                        .GroupBy(x => (x.PartNumberY, x.PartNumberX))
-                        .Sum(x => x.First().PartNumber)
-                        .ToString();
-
-                case Part.Two:
-                    {
-                        return partLabels
-                            .GroupBy(x => (x.SymbolY, x.SymbolX))
-                            .Where(x => x.First().Symbol == '*')
-                            .Where(x => x.Count() == 2)
-                            .Sum(x => x.Aggregate(1, (product, symbol) => product * symbol.PartNumber))
-                            .ToString();
-                    }
-
-                default:
-                    throw new InvalidOperationException($"Unknown Part: {Part}");
-            }
+                Part.One => partLabels
+                                        .GroupBy(x => (x.PartNumberY, x.PartNumberX))
+                                        .Sum(x => x.First().PartNumber)
+                                        .ToString(),
+                Part.Two => partLabels
+                                        .GroupBy(x => (x.SymbolY, x.SymbolX))
+                                        .Where(x => x.First().Symbol == '*')
+                                        .Where(x => x.Count() == 2)
+                                        .Sum(x => x.Aggregate(1, (product, symbol) => product * symbol.PartNumber))
+                                        .ToString(),
+                _ => throw new InvalidOperationException($"Unknown Part: {Part}"),
+            };
         }
 
         private class Schematic
