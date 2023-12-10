@@ -11,36 +11,77 @@ namespace AdventOfCode._2023._05
         public override string GetAnswer()
         {
             IEnumerable<string> lines = File.ReadLines(DataFilename);
-            IEnumerable<long> seeds = Regex.Match(lines.First(), @"seeds: ([\d\s]+)").Groups[1].Value.Split(
-                            (char[]?)null,
-                            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                .Select(long.Parse);
+            IEnumerable<Map> allMaps = lines
+                            .Skip(2)
+                            .Split(string.IsNullOrEmpty)
+                            .Select(Map.FromData);
 
-            IEnumerable<IGrouping<string, Map>> mapsBySourceType = lines
-                .Skip(2)
-                .Split(string.IsNullOrEmpty)
-                .Select(Map.FromData)
-                .GroupBy(x => x.SourceType);
+            long[] inputSeeds = Regex.Match(lines.First(), @"seeds: ([\d\s]+)").Groups[1].Value
+                .Split(
+                    (char[]?)null,
+                    StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Select(long.Parse)
+                .ToArray();
 
-            long minLocation = long.MaxValue;
-            foreach (long seed in seeds)
+            switch (Part)
             {
-                long location = PerformMapping("seed", "location", seed, mapsBySourceType, new HashSet<string>());
-                if (location < minLocation)
-                {
-                    minLocation = location;
-                }
-            }
+                case Part.One:
+                    {
+                        long minLocation = long.MaxValue;
+                        foreach (long seed in inputSeeds)
+                        {
+                            long location = PerformMapping(
+                                "seed",
+                                "location",
+                                seed,
+                                allMaps.GroupBy(x => x.SourceType),
+                                new HashSet<string>());
+                            if (location < minLocation)
+                            {
+                                minLocation = location;
+                            }
+                        }
 
-            return minLocation.ToString();
+                        return minLocation.ToString();
+                    }
+                case Part.Two:
+                    {
+                        IList<(long, long)> seedRanges = new List<(long, long)>();
+                        for (int i = 0; i < inputSeeds.Length; i += 2)
+                        {
+                            seedRanges.Add((inputSeeds[i], inputSeeds[i + 1]));
+                        }
+                        long location = 0;
+                        while (true)
+                        {
+                            long seed = PerformReverseMapping(
+                                "location",
+                                "seed",
+                                location,
+                                allMaps.GroupBy(x => x.DestinationType),
+                                new HashSet<string>());
+                            foreach ((long MinSeed, long RangeSize) seedRange in seedRanges)
+                            {
+                                if (seed >= seedRange.MinSeed && seed < seedRange.MinSeed + seedRange.RangeSize)
+                                {
+                                    return location.ToString();
+                                }
+                            }
+
+                            location++;
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"Unknown Part: {Part}");
+            }
         }
 
         private long PerformMapping(
-            string sourceType,
-            string destinationType,
-            long value,
-            IEnumerable<IGrouping<string, Map>> mapsBySourceType,
-            ISet<string> checkedTypes)
+        string sourceType,
+        string destinationType,
+        long value,
+        IEnumerable<IGrouping<string, Map>> mapsBySourceType,
+        ISet<string> checkedTypes)
         {
             if (checkedTypes.Contains(sourceType))
             {
@@ -59,6 +100,37 @@ namespace AdventOfCode._2023._05
                         destinationType,
                         map.GetDestinationValue(value),
                         mapsBySourceType,
+                        checkedTypes);
+                }
+            }
+
+            return value;
+        }
+
+        private long PerformReverseMapping(
+        string destinationType,
+        string sourceType,
+        long value,
+        IEnumerable<IGrouping<string, Map>> mapsByDestinationType,
+        ISet<string> checkedTypes)
+        {
+            if (checkedTypes.Contains(destinationType))
+            {
+                throw new Exception("Infinite loop detected");
+            }
+
+            checkedTypes.Add(destinationType);
+
+            while (destinationType != sourceType)
+            {
+                IEnumerable<Map> maps = mapsByDestinationType.First(x => x.Key == destinationType);
+                foreach (Map map in maps)
+                {
+                    return PerformReverseMapping(
+                        map.SourceType,
+                        sourceType,
+                        map.GetSourceValue(value),
+                        mapsByDestinationType,
                         checkedTypes);
                 }
             }
@@ -112,6 +184,20 @@ namespace AdventOfCode._2023._05
                 }
 
                 return sourceValue;
+            }
+
+            public long GetSourceValue(long destinationValue)
+            {
+                foreach (Range range in _ranges)
+                {
+                    if (destinationValue >= range.MinDestinationValue
+                        && destinationValue < range.MinDestinationValue + range.RangeSize)
+                    {
+                        return range.MinSourceValue + destinationValue - range.MinDestinationValue;
+                    }
+                }
+
+                return destinationValue;
             }
 
             private class Range
