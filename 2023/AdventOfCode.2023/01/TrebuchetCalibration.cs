@@ -43,6 +43,11 @@ namespace AdventOfCode._2023._01
                 match = _digitRegex.Match(line, match.Index + 1);
             }
 
+            if (!matches.Any())
+            {
+                return (0, 0);
+            }
+
             return (ConvertDigit(matches.First().Value), ConvertDigit(matches.Last().Value));
         }
 

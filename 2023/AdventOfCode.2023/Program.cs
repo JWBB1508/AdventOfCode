@@ -1,14 +1,19 @@
-﻿using AdventOfCode._2023._03;
-using AdventOfCode._2023.Library;
+﻿using AdventOfCode._2023.Library;
 
-const string Day = "03";
+string? inputDay = string.Empty;
+short day;
+while (!short.TryParse(inputDay, out day))
+{
+    Console.Write("Enter Day: ");
+    inputDay = Console.ReadLine();
+}
 
 Console.WriteLine(Part.One);
 
-Console.WriteLine(new EngineSchematic($"{Day}/example.txt", Part.One).GetAnswer());
-Console.WriteLine(new EngineSchematic($"{Day}/data.txt", Part.One).GetAnswer());
+Console.WriteLine(PuzzleFactory.GetPuzzle(day, $"{day:'0'#}/example.txt", Part.One).GetAnswer());
+Console.WriteLine(PuzzleFactory.GetPuzzle(day, $"{day:'0'#}/data.txt", Part.One).GetAnswer());
 
 Console.WriteLine(Part.Two);
 
-Console.WriteLine(new EngineSchematic($"{Day}/example.txt", Part.Two).GetAnswer());
-Console.WriteLine(new EngineSchematic($"{Day}/data.txt", Part.Two).GetAnswer());
+Console.WriteLine(PuzzleFactory.GetPuzzle(day, $"{day:'0'#}/example.txt", Part.Two).GetAnswer());
+Console.WriteLine(PuzzleFactory.GetPuzzle(day, $"{day:'0'#}/data.txt", Part.Two).GetAnswer());
