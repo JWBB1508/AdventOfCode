@@ -2,6 +2,7 @@
 using AdventOfCode._2023._02;
 using AdventOfCode._2023._03;
 using AdventOfCode._2023._04;
+using AdventOfCode._2023._05;
 
 namespace AdventOfCode._2023.Library
 {
@@ -15,6 +16,7 @@ namespace AdventOfCode._2023.Library
                 2 => new CubeGame(dataFilename, part),
                 3 => new EngineSchematic(dataFilename, part),
                 4 => new ScratchcardResolver(dataFilename, part),
+                5 => new GardenMapper(dataFilename, part),
                 _ => throw new ArgumentOutOfRangeException(nameof(day), day, $"Day {day} not supported by PuzzleFactory"),
             };
         }
