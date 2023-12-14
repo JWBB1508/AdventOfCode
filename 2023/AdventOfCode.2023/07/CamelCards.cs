@@ -4,7 +4,8 @@ namespace AdventOfCode._2023._07
 {
     internal class CamelCards : APuzzle
     {
-        public CamelCards(string dataFilename, Part part) : base(dataFilename, part)
+        public CamelCards(string dataFilename, Part part)
+            : base(dataFilename, part)
         { }
 
         public override string GetAnswer()

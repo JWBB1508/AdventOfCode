@@ -5,7 +5,8 @@ namespace AdventOfCode._2023._04
 {
     internal class ScratchcardResolver : APuzzle
     {
-        public ScratchcardResolver(string dataFilename, Part part) : base(dataFilename, part)
+        public ScratchcardResolver(string dataFilename, Part part)
+            : base(dataFilename, part)
         { }
 
         public override string GetAnswer()

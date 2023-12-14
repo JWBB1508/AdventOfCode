@@ -4,7 +4,8 @@ namespace AdventOfCode._2023._03
 {
     internal class EngineSchematic : APuzzle
     {
-        public EngineSchematic(string dataFilename, Part part) : base(dataFilename, part)
+        public EngineSchematic(string dataFilename, Part part)
+            : base(dataFilename, part)
         { }
 
         public override string GetAnswer()

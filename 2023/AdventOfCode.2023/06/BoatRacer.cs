@@ -4,7 +4,8 @@ namespace AdventOfCode._2023._06
 {
     internal class BoatRacer : APuzzle
     {
-        public BoatRacer(string dataFilename, Part part) : base(dataFilename, part)
+        public BoatRacer(string dataFilename, Part part)
+            : base(dataFilename, part)
         { }
 
         public override string GetAnswer()

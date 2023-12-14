@@ -5,6 +5,7 @@ using AdventOfCode._2023._04;
 using AdventOfCode._2023._05;
 using AdventOfCode._2023._06;
 using AdventOfCode._2023._07;
+using AdventOfCode._2023._08;
 
 namespace AdventOfCode._2023.Library
 {
@@ -21,6 +22,7 @@ namespace AdventOfCode._2023.Library
                 5 => new GardenMapper(dataFilename, part),
                 6 => new BoatRacer(dataFilename, part),
                 7 => new CamelCards(dataFilename , part),
+                8 => new NetworkNavigator(dataFilename, part),
                 _ => throw new ArgumentOutOfRangeException(nameof(day), day, $"Day {day} not supported by PuzzleFactory"),
             };
         }

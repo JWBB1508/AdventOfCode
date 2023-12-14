@@ -17,7 +17,7 @@ while (true)
 
     Console.WriteLine(Part.One);
 
-    Console.WriteLine(PuzzleFactory.GetPuzzle(day, $"{day:'0'#}/example.txt", Part.One).GetAnswer());
+    ////Console.WriteLine(PuzzleFactory.GetPuzzle(day, $"{day:'0'#}/example.txt", Part.One).GetAnswer());
     Console.WriteLine(PuzzleFactory.GetPuzzle(day, $"{day:'0'#}/data.txt", Part.One).GetAnswer());
 
     Console.WriteLine(Part.Two);

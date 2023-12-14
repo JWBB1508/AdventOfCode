@@ -5,7 +5,8 @@ namespace AdventOfCode._2023._05
 {
     internal class GardenMapper : APuzzle
     {
-        public GardenMapper(string dataFilename, Part part) : base(dataFilename, part)
+        public GardenMapper(string dataFilename, Part part)
+            : base(dataFilename, part)
         { }
 
         public override string GetAnswer()
