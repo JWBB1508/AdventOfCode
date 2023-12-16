@@ -1,13 +1,4 @@
-﻿using AdventOfCode._2023._01;
-using AdventOfCode._2023._02;
-using AdventOfCode._2023._03;
-using AdventOfCode._2023._04;
-using AdventOfCode._2023._05;
-using AdventOfCode._2023._06;
-using AdventOfCode._2023._07;
-using AdventOfCode._2023._08;
-
-namespace AdventOfCode._2023.Library
+﻿namespace AdventOfCode._2023.Library
 {
     internal static class PuzzleFactory
     {
@@ -15,14 +6,15 @@ namespace AdventOfCode._2023.Library
         {
             return day switch
             {
-                1 => new TrebuchetCalibration(dataFilename, part),
-                2 => new CubeGame(dataFilename, part),
-                3 => new EngineSchematic(dataFilename, part),
-                4 => new ScratchcardResolver(dataFilename, part),
-                5 => new GardenMapper(dataFilename, part),
-                6 => new BoatRacer(dataFilename, part),
-                7 => new CamelCards(dataFilename , part),
-                8 => new NetworkNavigator(dataFilename, part),
+                1 => new _01.TrebuchetCalibration(dataFilename, part),
+                2 => new _02.CubeGame(dataFilename, part),
+                3 => new _03.EngineSchematic(dataFilename, part),
+                4 => new _04.ScratchcardResolver(dataFilename, part),
+                5 => new _05.GardenMapper(dataFilename, part),
+                6 => new _06.BoatRacer(dataFilename, part),
+                7 => new _07.CamelCards(dataFilename, part),
+                8 => new _08.NetworkNavigator(dataFilename, part),
+                9 => new _09.OasisExtrapolator(dataFilename, part),
                 _ => throw new ArgumentOutOfRangeException(nameof(day), day, $"Day {day} not supported by PuzzleFactory"),
             };
         }
