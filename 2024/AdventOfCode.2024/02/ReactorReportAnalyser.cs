@@ -10,8 +10,8 @@ namespace AdventOfCode._2024._02
 
             return Part switch
             {
-                Part.One => GetListDistance(leftList, rightList).ToString(),
-                Part.Two => GetListSimilarity(leftList, rightList).ToString(),
+                Part.One => reports.Count(IsSafe).ToString(),
+                Part.Two => "",
                 _ => throw new ArgumentOutOfRangeException(nameof(Part), Part, "Unsupported Part"),
             };
         }
@@ -22,7 +22,7 @@ namespace AdventOfCode._2024._02
                 .Select(x => x.Split().Select(int.Parse).ToList()).ToList();
         }
 
-        private static bool IsSafe(this List<int> report)
+        private bool IsSafe(List<int> report)
         {
             bool increasing = report[1] > report[0];
 
