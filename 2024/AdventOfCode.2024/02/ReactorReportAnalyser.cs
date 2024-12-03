@@ -11,7 +11,7 @@ namespace AdventOfCode._2024._02
             return Part switch
             {
                 Part.One => reports.Count(IsSafe).ToString(),
-                Part.Two => "",
+                Part.Two => reports.Count(IsSafeWithDampener).ToString(),
                 _ => throw new ArgumentOutOfRangeException(nameof(Part), Part, "Unsupported Part"),
             };
         }
@@ -41,6 +41,26 @@ namespace AdventOfCode._2024._02
             }
 
             return true;
+        }
+
+        private bool IsSafeWithDampener(List<int> report)
+        {
+            if (IsSafe(report))
+            {
+                return true;
+            }
+
+            for (int i = 0; i < report.Count; i++)
+            {
+                var dampedReport = new List<int>(report);
+                dampedReport.RemoveAt(i);
+                if (IsSafe(dampedReport))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
