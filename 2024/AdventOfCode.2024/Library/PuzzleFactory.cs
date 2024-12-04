@@ -9,6 +9,7 @@
                 1 => new _01.ListDistanceFinder(dataFilename, part),
                 2 => new _02.ReactorReportAnalyser(dataFilename, part),
                 3 => new _03.ComputerDecorrupter(dataFilename, part),
+                4 => new _04.WordSearchSolver(dataFilename, part),
                 _ => throw new ArgumentOutOfRangeException(nameof(day), day, $"Day {day} not supported by PuzzleFactory"),
             };
         }
