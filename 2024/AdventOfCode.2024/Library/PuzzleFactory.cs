@@ -10,6 +10,7 @@
                 2 => new _02.ReactorReportAnalyser(dataFilename, part),
                 3 => new _03.ComputerDecorrupter(dataFilename, part),
                 4 => new _04.WordSearchSolver(dataFilename, part),
+                5 => new _05.PageOrderValidator(dataFilename, part),
                 _ => throw new ArgumentOutOfRangeException(nameof(day), day, $"Day {day} not supported by PuzzleFactory"),
             };
         }
